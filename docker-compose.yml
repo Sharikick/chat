@@ -1,0 +1,25 @@
+services:
+  client:
+    container_name: client
+    build:
+      context: ./client
+    volumes:
+      - ./client:/usr/share/nginx/html:ro
+    ports:
+      - 80:80
+    networks:
+      - chat-network
+    depends_on:
+      - server
+  server:
+    container_name: server
+    build:
+      context: ./server
+    volumes:
+      - ./server:/app
+    networks:
+      - chat-network
+
+networks:
+  chat-network:
+    driver: bridge
